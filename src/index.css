@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
+@import "leaflet/dist/leaflet.css";
+
+@theme {
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-display: "Outfit", "Inter", sans-serif;
+  
+  --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
+  --spacing-14: 3.5rem;
+  
+  --color-primary: #FF8A00;
+  --color-primary-light: #FFB347;
+  --color-primary-dark: #E67C00;
+  --color-surface: var(--surface);
+  --color-background: var(--background);
+  --color-secondary: var(--secondary);
+}
+
+:root {
+  --surface: #FFFFFF;
+  --background: #F8F9FA;
+  --secondary: #FFF4E5;
+}
+
+html.dark {
+  --surface: #121c2e;
+  --background: #0b111e;
+  --secondary: #2c1a05;
+}
+
+@layer base {
+  html {
+    font-size: 16px; /* Base for scale */
+  }
+
+  body {
+    @apply bg-background text-slate-800 font-sans antialiased selection:bg-primary/20 leading-relaxed tracking-normal;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  h1, h2, h3, h4, .font-display {
+    @apply font-sans font-bold tracking-tight leading-tight;
+  }
+
+  /* Senior Accessibility Improvements */
+  p {
+    @apply text-base md:text-lg leading-relaxed text-slate-600;
+  }
+
+  /* Smooth text transitions - removed global for performance */
+  h1, h2, h3, h4, .font-display, p, span, button {
+    @apply transition-[font-size,line-height] duration-200;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-white/70 backdrop-blur-xl border border-white/20;
+  }
+  
+  .glass-dark {
+    @apply bg-black/10 backdrop-blur-xl border border-white/10;
+  }
+  
+  .premium-shadow {
+    box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .orange-glow {
+    box-shadow: 0 0 20px rgba(255, 138, 0, 0.2);
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Custom scroll area for elderly */
+.touch-scroll {
+  -webkit-overflow-scrolling: touch;
+}

@@ -1,0 +1,16 @@
+{
+  "name": "ALLINONE HEALTHCARE",
+  "description": "A comprehensive healthcare app for the elderly featuring AI health advice, medication reminders, real-time GPS tracking, and SOS emergency alerts.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API",
+    "AI Health Chatbot",
+    "Medication Reminders",
+    "Real-time GPS Tracking",
+    "SOS Emergency Alerts"
+  ]
+}

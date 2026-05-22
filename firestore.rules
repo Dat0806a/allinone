@@ -1,0 +1,103 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+    function incoming() {
+      return request.resource.data;
+    }
+    function existing() {
+      return resource.data;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow read: if isSignedIn();
+      allow create, update: if isOwner(userId) && isValidUser(incoming());
+
+      function isValidUser(data) {
+        return data.uid == request.auth.uid 
+          && (data.email is string || data.email == null)
+          && (data.status in ['online', 'offline', 'emergency'])
+          && (data.lastSeen == request.time || data.lastSeen is timestamp || data.lastSeen == null);
+      }
+
+      // Health profile subcollection
+      match /profile/health {
+        allow read: if isOwner(userId);
+        allow write: if isOwner(userId);
+      }
+
+      // Medicines
+      match /medicines/{medicineId} {
+        allow read: if isOwner(userId);
+        allow write: if isOwner(userId);
+      }
+
+      // Schedules
+      match /schedules/{scheduleId} {
+        allow read: if isOwner(userId);
+        allow write: if isOwner(userId);
+      }
+
+      // Emergency Contacts
+      match /contacts/{contactId} {
+        allow read: if isOwner(userId);
+        allow write: if isOwner(userId);
+      }
+    }
+
+    // Emergency Contacts (Root)
+    match /emergency_contacts/{contactId} {
+      allow get, delete: if isSignedIn() && isValidId(contactId) && existing().user_id == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.user_id == request.auth.uid;
+      allow create: if isSignedIn() && isValidId(contactId) && incoming().user_id == request.auth.uid;
+      allow update: if isSignedIn() && isValidId(contactId) && existing().user_id == request.auth.uid && incoming().user_id == request.auth.uid;
+    }
+
+    // Medical History (Root)
+    match /medical_history/{historyId} {
+      allow get, delete: if isSignedIn() && isValidId(historyId) && existing().user_id == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.user_id == request.auth.uid;
+      allow create: if isSignedIn() && isValidId(historyId) && incoming().user_id == request.auth.uid;
+      allow update: if isSignedIn() && isValidId(historyId) && existing().user_id == request.auth.uid && incoming().user_id == request.auth.uid;
+    }
+
+    // SOS Alerts - Anyone signed in can read (to help), only owner can create/update
+    match /sos_alerts/{alertId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && incoming().userId == request.auth.uid;
+      allow update: if isSignedIn() && existing().userId == request.auth.uid;
+    }
+
+    // Locations - Friends can read
+    match /locations/{userId} {
+      allow read: if isSignedIn(); // In production, refine to check friendship
+      allow write: if isOwner(userId);
+    }
+
+    // Community Posts
+    match /posts/{postId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && incoming().user_id == request.auth.uid;
+      allow update: if isSignedIn() && (
+        (existing().user_id == request.auth.uid) ||
+        (incoming().diff(existing()).affectedKeys().hasOnly(['likes']))
+      );
+      allow delete: if isSignedIn() && existing().user_id == request.auth.uid;
+    }
+  }
+}

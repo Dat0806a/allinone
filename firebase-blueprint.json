@@ -1,0 +1,182 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Basic user profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "status": { "type": "string", "enum": ["online", "offline", "emergency"] },
+        "lastSeen": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "HealthProfile": {
+      "title": "Health Profile",
+      "description": "User's health data and medical background",
+      "type": "object",
+      "properties": {
+        "age": { "type": "integer" },
+        "weight": { "type": "number" },
+        "height": { "type": "number" },
+        "bloodType": { "type": "string" },
+        "conditions": { "type": "array", "items": { "type": "string" } },
+        "allergies": { "type": "array", "items": { "type": "string" } },
+        "medications": { "type": "array", "items": { "type": "string" } },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Medicine": {
+      "title": "Medicine",
+      "description": "Information about a specific medication",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "dosage": { "type": "string" },
+        "instructions": { "type": "string" },
+        "icon": { "type": "string" },
+        "color": { "type": "string" }
+      }
+    },
+    "MedicineSchedule": {
+      "title": "Medicine Schedule",
+      "description": "Reminder for taking medication",
+      "type": "object",
+      "properties": {
+        "medicineId": { "type": "string" },
+        "time": { "type": "string" },
+        "frequency": { "type": "string", "enum": ["daily", "weekly", "custom"] },
+        "days": { "type": "array", "items": { "type": "integer" } },
+        "taken": { "type": "boolean" },
+        "lastTakenAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "EmergencyContact": {
+      "title": "Emergency Contact",
+      "description": "Contact to be notified in case of SOS",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "relationship": { "type": "string" },
+        "email": { "type": "string" },
+        "address": { "type": "string" }
+      }
+    },
+    "MedicalHistory": {
+      "title": "Medical History",
+      "description": "User's diagnostic records & prescriptions",
+      "type": "object",
+      "properties": {
+        "user_id": { "type": "string" },
+        "hospital": { "type": "string" },
+        "doctor": { "type": "string" },
+        "date": { "type": "string" },
+        "diagnosis": { "type": "string" },
+        "result": { "type": "string" },
+        "prescription": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "string" }
+      }
+    },
+    "SOSAlert": {
+      "title": "SOS Alert",
+      "description": "Active emergency alert data",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "resolved"] },
+        "location": { "type": "object" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "resolvedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "Location": {
+      "title": "Location",
+      "description": "Real-time location coordinate",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "ChatMessage": {
+      "title": "Chat Message",
+      "description": "A message in a chat thread",
+      "type": "object",
+      "properties": {
+        "senderId": { "type": "string" },
+        "text": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "type": { "type": "string", "enum": ["text", "ai", "location"] }
+      }
+    },
+    "Post": {
+      "title": "Community Post",
+      "description": "A post in the health community",
+      "type": "object",
+      "properties": {
+        "authorId": { "type": "string" },
+        "authorName": { "type": "string" },
+        "authorPhoto": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "category": { "type": "string" },
+        "likes": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Root user details"
+    },
+    "/users/{userId}/profile/health": {
+      "schema": "HealthProfile",
+      "description": "Detailed health info"
+    },
+    "/users/{userId}/medicines/{medicineId}": {
+      "schema": "Medicine",
+      "description": "User's medicine list"
+    },
+    "/users/{userId}/schedules/{scheduleId}": {
+      "schema": "MedicineSchedule",
+      "description": "Medication reminders"
+    },
+    "/emergency_contacts/{contactId}": {
+      "schema": "EmergencyContact",
+      "description": "Global emergency contacts"
+    },
+    "/medical_history/{historyId}": {
+      "schema": "MedicalHistory",
+      "description": "Global medical history logs"
+    },
+    "/sos_alerts/{alertId}": {
+      "schema": "SOSAlert",
+      "description": "Global active SOS alerts"
+    },
+    "/locations/{userId}": {
+      "schema": "Location",
+      "description": "Latest location of users"
+    },
+    "/chats/{chatId}/messages/{messageId}": {
+      "schema": "ChatMessage",
+      "description": "Messages within a chat session"
+    },
+    "/posts/{postId}": {
+      "schema": "Post",
+      "description": "Community health posts"
+    },
+    "/friendships/{friendshipId}": {
+      "schema": "object",
+      "description": "Connections between users"
+    }
+  }
+}
