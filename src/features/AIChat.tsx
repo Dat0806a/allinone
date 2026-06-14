@@ -184,27 +184,7 @@ const AIChat: React.FC = () => {
           </motion.button>
         </div>
         
-        {/* Quick Voice Access - Only show if no user messages yet */}
-        <AnimatePresence>
-          {messages.length <= 1 && (
-            <div className="absolute -top-24 left-1/2 -translate-x-1/2">
-               <motion.button 
-                 initial={{ opacity: 0, y: 10 }}
-                 animate={{ opacity: 1, y: 0 }}
-                 exit={{ opacity: 0, scale: 0.8 }}
-                 whileHover={{ y: -2 }}
-                 whileTap={{ scale: 0.9 }}
-                 className="glass px-6 py-3 rounded-full flex items-center gap-3 premium-shadow border border-white/50 group"
-               >
-                 <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                 <span className="text-[10px] font-bold text-slate-500 tracking-widest uppercase text-center leading-tight">
-                   Nói để đặt câu<br/>hỏi
-                 </span>
-                 <Mic className="text-primary group-hover:scale-110 transition-transform" size={18} />
-               </motion.button>
-            </div>
-          )}
-        </AnimatePresence>
+
       </div>
     </div>
   );

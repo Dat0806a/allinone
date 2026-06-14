@@ -123,12 +123,6 @@ const MapScreen: React.FC = () => {
             className="flex-1 bg-transparent py-3 text-sm outline-none font-medium placeholder:text-slate-400"
           />
         </div>
-
-        <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2">
-          <MapFilter label="Tất cả" active />
-          <MapFilter label="Người thân" />
-          <MapFilter label="Bệnh viện" />
-        </div>
       </div>
 
       {/* Map Implementation */}
@@ -229,19 +223,5 @@ const MapScreen: React.FC = () => {
     </div>
   );
 };
-
-const MapFilter = ({ label, active }: any) => (
-  <motion.button
-    whileTap={{ scale: 0.95 }}
-    className={cn(
-      "px-5 py-2.5 rounded-full whitespace-nowrap font-bold text-xs shadow-lg border transition-all",
-      active 
-        ? "bg-slate-900 text-white border-slate-800" 
-        : "bg-white/80 text-slate-600 border-white/50 backdrop-blur-md"
-    )}
-  >
-    {label}
-  </motion.button>
-);
 
 export default MapScreen;
