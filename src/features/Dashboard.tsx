@@ -202,66 +202,7 @@ const Dashboard: React.FC = () => {
         </form>
       </div>
 
-      {/* Main Stats Card */}
-      <PremiumCard className="bg-gradient-to-br from-[#FF8A00] to-orange-500 text-white relative overflow-hidden group border-none shadow-[0_20px_50px_rgba(255,138,0,0.3)]">
-        {/* Abstract Background Decoration */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-125 transition-transform duration-1000" />
-        
-        <div className="relative z-10">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center border border-white/20">
-                <HeartPulse className="text-white" size={24} />
-              </div>
-              <span className="font-display font-black text-xs tracking-widest uppercase opacity-80">Tổng quan sức khỏe</span>
-            </div>
-            <span className="text-xs bg-white/20 text-white px-3 py-1.5 rounded-full font-black uppercase tracking-widest border border-white/20">Tuyệt vời</span>
-          </div>
 
-          <div className="grid grid-cols-2 gap-8 mb-8">
-            <div className="space-y-1">
-              <p className="text-xs font-black text-white/70 uppercase tracking-widest flex items-center gap-2">
-                <Heart size={10} className="text-white" /> Nhịp tim
-              </p>
-              <div className="flex items-baseline gap-2">
-                <span className="text-4xl font-display font-black">72</span>
-                <span className="text-xs opacity-50 font-black uppercase tracking-widest">BPM</span>
-              </div>
-              {/* Mini Chart SVG */}
-              <div className="h-8 flex items-end gap-1 pt-2">
-                {HEALTH_CHART.map((h, i) => (
-                  <motion.div 
-                    key={i}
-                    initial={{ height: 0 }}
-                    animate={{ height: `${(h/80)*100}%` }}
-                    className="flex-1 bg-white/40 rounded-t-sm"
-                  />
-                ))}
-              </div>
-            </div>
-            <div className="space-y-1">
-              <p className="text-xs font-black text-white/70 uppercase tracking-widest flex items-center gap-2">
-                <Activity size={10} className="text-white" /> Huyết áp
-              </p>
-              <div className="flex items-baseline gap-2">
-                <span className="text-4xl font-display font-black">120/80</span>
-              </div>
-              <p className="text-xs text-white font-black uppercase tracking-widest bg-white/20 w-fit px-3 py-1 rounded-lg mt-2 font-display">Ổn định</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-6 pt-6 border-t border-white/10">
-            <div className="flex items-center gap-3">
-              <Thermometer size={16} className="text-white" />
-              <div className="text-sm font-bold">36.6°C</div>
-            </div>
-            <div className="flex items-center gap-3">
-              <Zap size={16} className="text-white" />
-              <div className="text-sm font-bold">98% Oxy</div>
-            </div>
-          </div>
-        </div>
-      </PremiumCard>
 
       {/* Services Grid */}
       <div>

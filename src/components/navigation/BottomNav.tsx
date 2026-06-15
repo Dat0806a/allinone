@@ -15,7 +15,6 @@ export const BottomNav: React.FC<BottomNavProps> = ({
   const tabs = [
     { id: "home", icon: Home, label: "Trang chủ" },
     { id: "chat", icon: MessageSquare, label: "AI Chat" },
-    { id: "stats", icon: BarChart3, label: "Sức khỏe" },
     { id: "map", icon: MapPin, label: "Bản đồ" },
     { id: "profile", icon: User, label: "Cá nhân" },
   ];
