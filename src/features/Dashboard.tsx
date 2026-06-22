@@ -208,7 +208,7 @@ const Dashboard: React.FC = () => {
       <div>
         <SectionHeader title="Dịch vụ nhanh" />
         <div className="grid grid-cols-2 gap-4">
-          <ServiceItem onClick={() => setActiveTab('chat')} icon={Star} label="AI Khám bệnh" sub="Chat 24/7" color="bg-orange-500" />
+          <ServiceItem onClick={() => setActiveTab('chat')} icon={Star} label="AI Chat" sub="Chat 24/7" color="bg-orange-500" />
           <ServiceItem onClick={() => setActiveTab('tests')} icon={Activity} label="Xét nghiệm" sub="Tại nhà" color="bg-blue-500" />
           <ServiceItem onClick={() => setActiveTab('nutrition')} icon={Heart} label="Thực đơn" sub="Dinh dưỡng" color="bg-red-500" />
           <ServiceItem onClick={() => setActiveTab('medicines')} icon={Zap} label="Nhắc thuốc" sub="Đúng giờ" color="bg-purple-500" />
